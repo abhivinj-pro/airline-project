@@ -14,13 +14,12 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Any, Literal, TypeVar, cast
 
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from dotenv import load_dotenv
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core.agent.workflow import ReActAgent
 from llama_index.core.llms import ChatMessage
 from llama_index.core.tools import FunctionTool
-from llama_index.llms.azure_openai import AzureOpenAI
+from llama_index.llms.openrouter import OpenRouter
 from pydantic import BaseModel, Field
 
 load_dotenv()
@@ -28,9 +27,7 @@ load_dotenv()
 ROOT_DIR = Path(__file__).resolve().parents[1]
 FAQ_PATH = ROOT_DIR / "data" / "customer_support_faq.md"
 
-DEFAULT_ENDPOINT = "https://datascienceopenai-actualeastus2.openai.azure.com/"
-DEFAULT_DEPLOYMENT = "gpt-4o"
-DEFAULT_API_VERSION = "2025-01-01-preview"
+DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct"
 INTERNATIONAL_DESTINATION_CODES = {"DXB", "SIN", "BKK", "LHR"}
 HUMAN_AGENT_TOOL_FALLBACK = "Handle the response through generic AI message."
 HUMAN_AGENT_GREETING = "Hi, I am Tata Birla. How can I assist you?"
@@ -334,27 +331,15 @@ def _apply_confirmation_guardrails(response_text: str, session_context: dict) ->
 
 
 @lru_cache(maxsize=1)
-def _token_provider():
-    credential = DefaultAzureCredential()
-    return get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
+def _get_llm() -> OpenRouter:
+    api_key = os.getenv("OPENROUTER_API_KEY", "")
+    model = os.getenv("OPENROUTER_MODEL", DEFAULT_MODEL)
 
-
-@lru_cache(maxsize=1)
-def _get_llm() -> AzureOpenAI:
-    endpoint = os.getenv("ENDPOINT_URL", DEFAULT_ENDPOINT)
-    deployment = os.getenv("DEPLOYMENT_NAME", DEFAULT_DEPLOYMENT)
-    model_name = os.getenv("MODEL_NAME", deployment)
-    api_version = os.getenv("OPENAI_API_VERSION", DEFAULT_API_VERSION)
-
-    return AzureOpenAI(
-        model=model_name,
-        engine=deployment,
-        azure_endpoint=endpoint,
-        azure_ad_token_provider=_token_provider(),
-        use_azure_ad=True,
-        api_version=api_version,
+    return OpenRouter(
+        api_key=api_key,
+        model=model,
         temperature=0.2,
-        max_retries=2,
+        max_tokens=4096,
         timeout=60.0,
     )
 

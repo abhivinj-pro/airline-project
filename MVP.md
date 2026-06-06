@@ -28,7 +28,7 @@ Signals are weighted and multiplied by booking step (later steps = higher intent
 Assumption: The current signal weights, step multipliers, and intervention thresholds are heuristic MVP defaults. In a real deployment, we would train a supervised model on historical funnel data to predict abandonment probability, then calibrate both feature importance and trigger cutoffs using offline validation and A/B testing.
 
 ### 2. Proactive AI Chat Concierge
-When risk score crosses thresholds, an Azure OpenAI-powered chat assistant proactively engages:
+When risk score crosses thresholds, an OpenRouter-powered chat assistant proactively engages:
 
 - **Score 0.45+** — Friendly nudge: "Need help finding the right flight?"
 - **Score 0.65+** — Active assistance: "I noticed you're on the passenger details step — can I help?"

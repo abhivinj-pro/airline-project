@@ -213,7 +213,7 @@ add_icon_card(slide, start_x, card_y, card_w, card_h,
 
 add_icon_card(slide, start_x + card_w + gap, card_y, card_w, card_h,
               "2", "Proactive AI Chat Concierge",
-              "Azure OpenAI-powered assistant engages users when risk score crosses thresholds. Context-aware: knows the flight, price, funnel step, and specific trigger signals. Adapts tone from friendly nudge (0.45+) to urgent save (0.80+).",
+              "OpenRouter-powered assistant engages users when risk score crosses thresholds. Context-aware: knows the flight, price, funnel step, and specific trigger signals. Adapts tone from friendly nudge (0.45+) to urgent save (0.80+).",
               icon_color=ACCENT2)
 
 add_icon_card(slide, start_x + 2 * (card_w + gap), card_y, card_w, card_h,

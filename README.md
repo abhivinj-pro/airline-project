@@ -9,7 +9,7 @@ The MVP business context, assumptions, and revenue estimates now live in [MVP.md
 | Component | Technology | Rationale |
 |-----------|-----------|-----------|
 | **Backend Framework** | **FastAPI (Python)** | Async-native for WebSocket chat + REST APIs. Fast development speed. Excellent AI library ecosystem (OpenAI SDK). Pydantic for automatic validation. |
-| **AI Engine** | **Azure OpenAI (GPT-4o)** | Enterprise-grade managed AI service with SLA guarantees. Strong reasoning for nuanced, empathetic booking conversations. Integrates with existing Azure infrastructure. Data residency and compliance controls built-in. |
+| **AI Engine** | **OpenRouter (LlamaIndex)** | Unified API gateway to leading open and proprietary LLMs. Flexible model selection with no cloud lock-in. LlamaIndex ReAct agent for tool-driven conversations. |
 | **Database** | **SQLite (aiosqlite)** | Zero infrastructure for MVP. Async driver for non-blocking I/O. Trivial to swap to PostgreSQL for production. |
 | **Real-time Communication** | **WebSocket** | Low-latency bidirectional chat. Instant delivery of proactive AI messages. Graceful REST fallback included. |
 | **Frontend** | **Vanilla HTML/CSS/JS** | No build step — instant demo-ability. Easy to embed as a widget in any existing airline website. No framework lock-in. |
@@ -17,7 +17,7 @@ The MVP business context, assumptions, and revenue estimates now live in [MVP.md
 
 **Why not React/Next.js?** For an MVP, eliminating the build step makes the solution instantly deployable and demo-able. The chat widget is designed as a drop-in script that works on any site.
 
-**Why Azure OpenAI?** Enterprise-grade with SLA, data residency controls, and seamless integration with Azure ecosystem (App Service, Key Vault, Monitor). GPT-4o provides strong reasoning for nuanced, empathetic booking conversations with fast response times.
+**Why OpenRouter?** Unified API access to a wide range of models (Llama, Mistral, Claude, GPT-4o, and more) with no single-vendor lock-in. LlamaIndex provides a clean abstraction layer for tool-calling and structured completions, keeping the AI engine model-agnostic.
 
 ## Project Structure
 
@@ -25,7 +25,7 @@ The MVP business context, assumptions, and revenue estimates now live in [MVP.md
 airline-booking-recovery/
 ├── backend/
 │   ├── main.py              # FastAPI app — routes, WebSocket, API endpoints
-│   ├── ai_engine.py         # Azure OpenAI-powered AI: proactive messages, chat, recovery copy
+│   ├── ai_engine.py         # OpenRouter-powered AI: proactive messages, chat, recovery copy
 │   ├── abandonment.py       # Risk scoring engine with weighted signals
 │   ├── recovery.py          # Recovery campaign orchestration
 │   └── database.py          # SQLite async database layer
@@ -55,10 +55,9 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Configure Azure OpenAI (uses Entra ID / DefaultAzureCredential)
+# 4. Configure OpenRouter
 cp .env.example .env
-# Edit .env with your ENDPOINT_URL and DEPLOYMENT_NAME
-# Ensure you are logged in via `az login` for Entra ID token auth
+# Edit .env with your OPENROUTER_API_KEY and optionally OPENROUTER_MODEL
 
 # 5. Run the server
 python -m backend.main
@@ -104,6 +103,6 @@ For the current MVP demo, the proactive timing is intentionally compressed so nu
 
 3. **Explicit abandonment for recovery**: Dashboard abandonments come from an explicit Exit during passenger or payment, so recovery campaigns only target real unfinished checkouts instead of inferred high-risk sessions.
 
-4. **Graceful degradation**: If the Azure OpenAI API is unavailable, fallback messages are served. If WebSocket fails, REST API takes over. The booking flow works without the AI layer.
+4. **Graceful degradation**: If the OpenRouter API is unavailable, fallback messages are served. If WebSocket fails, REST API takes over. The booking flow works without the AI layer.
 
 5. **Privacy-first tracking**: Behavioral signals are aggregated counts (e.g., "3 tab switches"), not raw events or PII. No cookies or fingerprinting beyond the session.
