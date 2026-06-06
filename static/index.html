@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirWave - Book Your Flight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css?v=6">
+</head>
+<body class="booking-page">
+
+<!-- ─── Header ────────────────────────────────────────────────── -->
+<header class="header">
+    <div class="logo">
+        <span>&#x2708;</span> AirWave
+    </div>
+    <nav>
+        <a href="/">Book</a>
+        <a href="/dashboard">Dashboard</a>
+    </nav>
+</header>
+
+<section class="booking-hero">
+    <div class="booking-hero-copy">
+        <span class="eyebrow">India First Booking Experience</span>
+        <h1>Book smarter journeys from India with a cleaner, faster checkout.</h1>
+        <p>AirWave pairs premium fare discovery with recovery intelligence, so customers can pause, compare, and still return to the exact booking they started.</p>
+        <div class="hero-chip-row">
+            <span class="hero-chip">INR pricing throughout</span>
+            <span class="hero-chip">24-hour cancellation</span>
+            <span class="hero-chip">AI-assisted recovery</span>
+        </div>
+    </div>
+</section>
+
+<section class="booking-trust-strip">
+    <div class="trust-pill">Transparent INR fares</div>
+    <div class="trust-pill">Free cancellation within 24 hours</div>
+    <div class="trust-pill">Instant recovery if a session drops</div>
+    <div class="trust-pill">Designed for mobile-first Indian travelers</div>
+</section>
+
+<!-- ─── Progress Stepper ──────────────────────────────────────── -->
+<div class="stepper">
+    <div class="step active" data-step="search">
+        <span class="num">1</span> Search
+    </div>
+    <div class="step" data-step="results">
+        <span class="num">2</span> Select Flight
+    </div>
+    <div class="step" data-step="passenger">
+        <span class="num">3</span> Passengers
+    </div>
+    <div class="step" data-step="ancillaries">
+        <span class="num">4</span> Extras
+    </div>
+    <div class="step" data-step="payment">
+        <span class="num">5</span> Payment
+    </div>
+</div>
+
+<!-- ─── Main Content ──────────────────────────────────────────── -->
+<main class="main">
+
+    <!-- Step 1: Search -->
+    <section id="step-search" class="booking-step">
+        <div class="search-layout">
+            <div class="card booking-card">
+                <div class="card-intro">
+                    <span class="eyebrow">Plan With Confidence</span>
+                    <h2>Search Flights</h2>
+                    <p>Choose your route, compare fare quality, and move into checkout without the heavy airline-site clutter.</p>
+                    <div class="booking-highlights">
+                        <div class="highlight-item">
+                            <strong>Premium support</strong>
+                            <span>AI booking help without leaving the flow</span>
+                        </div>
+                        <div class="highlight-item">
+                            <strong>Fast checkout</strong>
+                            <span>Passenger, extras, and payment in one guided path</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-form">
+                    <div class="form-group">
+                        <label>From</label>
+                        <select id="from-city">
+                            <option value="">Select departure city</option>
+                            <option value="Bengaluru (BLR)" selected>Bengaluru (BLR)</option>
+                            <option value="Mumbai (BOM)">Mumbai (BOM)</option>
+                            <option value="Delhi (DEL)">Delhi (DEL)</option>
+                            <option value="Hyderabad (HYD)">Hyderabad (HYD)</option>
+                            <option value="Chennai (MAA)">Chennai (MAA)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>To</label>
+                        <select id="to-city">
+                            <option value="">Select destination</option>
+                            <option value="Dubai (DXB)" selected>Dubai (DXB)</option>
+                            <option value="Singapore (SIN)">Singapore (SIN)</option>
+                            <option value="Bangkok (BKK)">Bangkok (BKK)</option>
+                            <option value="Goa (GOX)">Goa (GOX)</option>
+                            <option value="London (LHR)">London (LHR)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Travel Date</label>
+                        <input type="date" id="travel-date">
+                    </div>
+                    <div class="form-group">
+                        <label>Passengers</label>
+                        <select id="passengers">
+                            <option value="1" selected>1 Adult</option>
+                            <option value="2">2 Adults</option>
+                            <option value="3">3 Adults</option>
+                            <option value="4">4 Adults</option>
+                            <option value="5">5 Adults</option>
+                            <option value="6">6 Adults</option>
+                            <option value="7">7 Adults</option>
+                            <option value="8">8 Adults</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width search-submit">
+                        <button class="btn btn-primary btn-block" onclick="searchFlights()">
+                            Search Flights
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="card spotlight-card">
+                <span class="eyebrow">Fare Snapshot</span>
+                <h3>Built for travelers who want clarity before checkout.</h3>
+                <div class="spotlight-points">
+                    <div class="spotlight-point">
+                        <strong>Fare lock</strong>
+                        <p>Hold the displayed INR fare while you finish passenger details and payment.</p>
+                    </div>
+                    <div class="spotlight-point">
+                        <strong>AI booking support</strong>
+                        <p>AirAssist steps in when travelers hesitate, compare tabs, or need quick help.</p>
+                    </div>
+                    <div class="spotlight-point">
+                        <strong>Faster payment review</strong>
+                        <p>See your fare, bundled extras, and final total in one place before you pay.</p>
+                    </div>
+                </div>
+                <div class="spotlight-stats">
+                    <div>
+                        <span>92%</span>
+                        <small>completion on assisted sessions</small>
+                    </div>
+                    <div>
+                        <span>24h</span>
+                        <small>free cancellation window</small>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+    </section>
+
+    <!-- Step 2: Flight Results -->
+    <section id="step-results" class="booking-step" style="display:none;">
+        <div class="card">
+            <h2>Available Flights</h2>
+            <p id="route-display" class="section-note"></p>
+            <div id="flight-list"></div>
+            <div class="button-row">
+                <button class="btn btn-outline" onclick="showStep('search')">Back to Search</button>
+                <button class="btn btn-primary button-grow" id="continue-to-passenger" onclick="continueToPassenger()" disabled>
+                    Continue with Selected Flight
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 3: Passenger Details -->
+    <section id="step-passenger" class="booking-step" style="display:none;">
+        <div class="card">
+            <h2>Passenger Details</h2>
+            <div id="passenger-draft-review" class="passenger-draft-review" style="display:none;">
+                <div class="passenger-draft-copy">
+                    <span class="eyebrow">Review Chat Details</span>
+                    <h3>AirAssist captured traveler details from chat.</h3>
+                    <p>Nothing is applied automatically. Review these fields and choose whether to fill the form with them.</p>
+                </div>
+                <div id="passenger-draft-fields" class="passenger-draft-fields"></div>
+                <div class="button-row passenger-draft-actions">
+                    <button class="btn btn-outline" type="button" onclick="dismissPassengerDraft()">Dismiss</button>
+                    <button class="btn btn-primary button-grow" type="button" onclick="applyPassengerDraft()">Apply to Form</button>
+                </div>
+            </div>
+            <div class="passenger-form">
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" id="first-name" placeholder="As on passport">
+                </div>
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" id="last-name" placeholder="As on passport">
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="pax-email" placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="pax-phone" placeholder="+91 98765 43210">
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="pax-dob">
+                </div>
+                <div class="form-group">
+                    <label>Passport Number</label>
+                    <input type="text" id="pax-passport" placeholder="Optional">
+                </div>
+            </div>
+            <div class="button-row">
+                <button class="btn btn-outline" onclick="showStep('results')">Back</button>
+                <button class="btn btn-danger" onclick="exitBooking('passenger')">Exit</button>
+                <button class="btn btn-primary button-grow" onclick="continueToAncillaries()">
+                    Continue to Extras
+                </button>
+            </div>
+        </div>
+
+        <div id="passenger-price-lock" class="card price-lock-card" style="display:none;">
+            <div class="price-lock-content">
+                <span class="price-lock-icon">&#x23F0;</span>
+                <div>
+                    <strong>Your Price is Locked!</strong>
+                    <p class="price-lock-copy">
+                        We're holding this price for you for the next 4 hours. Take your time filling in the details.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 4: Ancillaries -->
+    <section id="step-ancillaries" class="booking-step" style="display:none;">
+        <div class="card">
+            <h2>Enhance Your Trip</h2>
+            <p class="section-note">
+                Select any extras for a better travel experience (all optional).
+            </p>
+            <div id="ancillary-grid" class="ancillary-grid"></div>
+            <div class="button-row">
+                <button class="btn btn-outline" onclick="showStep('passenger')">Back</button>
+                <button class="btn btn-primary button-grow" onclick="continueToPayment()">
+                    Continue to Payment
+                </button>
+                <button class="btn btn-outline" onclick="continueToPayment()">
+                    Skip Extras
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 5: Payment -->
+    <section id="step-payment" class="booking-step" style="display:none;">
+        <div class="card">
+            <h2>Booking Summary & Payment</h2>
+            <div id="payment-summary" class="payment-summary"></div>
+
+            <h3 class="subsection-heading">Payment Details</h3>
+            <div class="payment-form">
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123" maxlength="4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Cardholder Name</label>
+                    <input type="text" placeholder="Name on card">
+                </div>
+            </div>
+
+            <div class="secure-badge">
+                <span>&#x1F512;</span> Secured with 256-bit SSL encryption
+            </div>
+
+            <div class="button-row">
+                <button class="btn btn-outline" onclick="showStep('ancillaries')">Back</button>
+                <button class="btn btn-danger" onclick="exitBooking('payment')">Exit</button>
+                <button class="btn btn-accent btn-block button-grow" id="pay-btn" onclick="completeBooking()">
+                    Pay & Confirm Booking
+                </button>
+            </div>
+
+        </div>
+
+        <div id="payment-price-lock" class="card price-lock-card" style="display:none;">
+            <div class="price-lock-content">
+                <span class="price-lock-icon">&#x23F0;</span>
+                <div>
+                    <strong>Your Price is Locked!</strong>
+                    <p class="price-lock-copy">
+                        We're holding this price for you for the next 4 hours. Take your time reviewing the fare and payment details.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation -->
+    <section id="step-confirmation" class="booking-step" style="display:none;">
+        <div class="card confirmation">
+            <div class="check">&#x2713;</div>
+            <h2>Booking Confirmed!</h2>
+            <p class="ref">Reference: <strong id="booking-ref"></strong></p>
+            <p><strong id="conf-name"></strong></p>
+            <p id="conf-flight" class="section-note"></p>
+            <p class="section-note confirmation-copy">
+                A confirmation email has been sent to your email address.
+                <br>Remember: free cancellation within 24 hours!
+            </p>
+            <button class="btn btn-primary confirmation-btn" onclick="location.reload()">
+                Book Another Flight
+            </button>
+        </div>
+    </section>
+
+</main>
+
+<section class="booking-bottom-insights">
+    <div class="booking-hero-panel bottom-panel">
+        <div class="hero-panel-card route-card">
+            <div class="mini-label">Popular Tonight</div>
+            <strong>Bengaluru to Dubai</strong>
+            <span>Non-stop departures with priority baggage and lounge-ready bundles.</span>
+        </div>
+        <div class="hero-panel-grid">
+            <div class="hero-panel-card metric">
+                <strong>4 hrs</strong>
+                <span>price lock window</span>
+            </div>
+            <div class="hero-panel-card metric">
+                <strong>92%</strong>
+                <span>assisted completion rate</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Scripts ────────────────────────────────────────────────── -->
+<script src="/static/js/tracker.js?v=5"></script>
+<script src="/static/js/chat-widget.js?v=6"></script>
+<script src="/static/js/app.js?v=8"></script>
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirWave — AI Recovery Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css?v=6">
+    <style>
+        .refresh-btn {
+            background: rgba(255, 248, 242, 0.14);
+            border: 1px solid rgba(255, 248, 242, 0.28);
+            color: #fff8f2;
+            padding: 10px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(18px);
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        .refresh-btn:hover {
+            background: rgba(255, 248, 242, 0.22);
+            border-color: rgba(255, 248, 242, 0.42);
+            transform: translateY(-1px);
+        }
+
+        .recovery-actions {
+            padding: 0 24px 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .action-card {
+            background: var(--panel);
+            border-radius: calc(var(--radius) + 6px);
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-strong);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(176, 82, 62, 0.12), rgba(22, 101, 92, 0.06));
+            pointer-events: none;
+        }
+
+        .action-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-card h3 { margin-bottom: 12px; }
+
+        .trigger-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 16px 30px rgba(191, 104, 35, 0.24);
+        }
+
+        .trigger-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 34px rgba(191, 104, 35, 0.3);
+        }
+        .trigger-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .recovery-log {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(55, 27, 24, 0.88);
+            color: #fdeee7;
+            border-radius: 16px;
+            font-family: monospace;
+            font-size: 13px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid rgba(253, 238, 231, 0.12);
+        }
+
+        .insight-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .insight-list li {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .insight-list li:last-child { border-bottom: none; }
+
+        .abandoned-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .summary-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(22, 101, 92, 0.08);
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .abandoned-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .abandoned-table th,
+        .abandoned-table td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .abandoned-table th {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+        }
+
+        .abandoned-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .session-id {
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .session-route strong,
+        .session-passenger strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .session-route span,
+        .session-passenger span,
+        .session-meta {
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+
+        .status-badge.ready {
+            background: rgba(22, 101, 92, 0.12);
+            color: var(--secondary);
+        }
+
+        .status-badge.blocked {
+            background: rgba(180, 77, 94, 0.12);
+            color: var(--danger);
+        }
+
+        .status-badge.sent {
+            background: rgba(201, 139, 34, 0.16);
+            color: var(--warning);
+        }
+
+        .empty-state {
+            padding: 18px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.58);
+            border: 1px dashed var(--border-strong);
+            color: var(--text-light);
+        }
+
+        .insight-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .pipeline-bar {
+            display: flex;
+            height: 40px;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 16px 0;
+            border: 1px solid var(--border-strong);
+        }
+
+        .pipeline-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            transition: width 1s ease-out;
+        }
+
+        .dashboard-hero {
+            max-width: 1200px;
+            margin: 24px auto 0;
+            padding: 0 24px;
+        }
+
+        .hero-band {
+            background: linear-gradient(135deg, rgba(255, 248, 242, 0.9), rgba(253, 238, 231, 0.7));
+            border: 1px solid rgba(176, 82, 62, 0.14);
+            box-shadow: var(--shadow-lg);
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+            gap: 20px;
+            padding: 28px;
+        }
+
+        .hero-band h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            margin-bottom: 12px;
+        }
+
+        .hero-band p {
+            color: var(--text-light);
+            max-width: 56ch;
+        }
+
+        .hero-band .hero-chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .hero-band .hero-chip {
+            padding: 10px 14px;
+            background: rgba(22, 101, 92, 0.08);
+            border: 1px solid rgba(22, 101, 92, 0.12);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .hero-metric-stack {
+            display: grid;
+            gap: 14px;
+        }
+
+        .hero-mini-card {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 16px 18px;
+        }
+
+        .hero-mini-card strong {
+            display: block;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .hero-mini-card span {
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-band {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-page">
+
+<header class="dashboard-header">
+    <div style="display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto;">
+        <div>
+            <h1>&#x2708; AirWave AI Recovery Dashboard</h1>
+            <p>Real-time booking funnel analytics and AI intervention metrics</p>
+        </div>
+        <div style="display:flex; gap:12px;">
+            <button class="refresh-btn" onclick="loadMetrics()">&#x21BB; Refresh</button>
+            <a href="/" class="refresh-btn" style="text-decoration:none;">Back to Booking</a>
+        </div>
+    </div>
+</header>
+
+<section class="dashboard-hero">
+    <div class="hero-band">
+        <div>
+            <span class="eyebrow">Revenue Recovery Intelligence</span>
+            <h2>Spot friction early and recover sessions with a calmer, more human funnel.</h2>
+            <p>Track where customers slow down, which interventions convert, and how fast recovery campaigns bring shoppers back into the booking flow.</p>
+            <div class="hero-chip-row">
+                <div class="hero-chip">Explicit checkout exits</div>
+                <div class="hero-chip">Proactive chat nudges</div>
+                <div class="hero-chip">Recovery-ready contact capture</div>
+            </div>
+        </div>
+        <div class="hero-metric-stack">
+            <div class="hero-mini-card">
+                <strong id="hero-rate">23%</strong>
+                <span>assist-to-conversion lift on at-risk sessions</span>
+            </div>
+            <div class="hero-mini-card">
+                <strong id="hero-dropoff">Passenger Step</strong>
+                <span>current highest drop-off stage</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── KPI Metrics ───────────────────────────────────────────── -->
+<div class="metrics-grid" id="metrics-grid">
+    <div class="metric-card">
+        <div class="label">Total Sessions</div>
+        <div class="value" id="m-total">0</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">Abandonments</div>
+        <div class="value" id="m-abandoned" style="color: var(--danger);">0</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">AI Interventions</div>
+        <div class="value" id="m-interventions" style="color: var(--primary);">0</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">Conversions</div>
+        <div class="value" id="m-conversions" style="color: var(--success);">0</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">Conversion Rate</div>
+        <div class="value" id="m-rate" style="color: var(--success);">0%</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">Recovery Sent</div>
+        <div class="value" id="m-recovery" style="color: var(--warning);">0</div>
+    </div>
+</div>
+
+<!-- ─── Charts Area ──────────────────────────────────────────── -->
+<div class="charts-area">
+    <!-- Booking Funnel -->
+    <div class="chart-card">
+        <h3>Booking Funnel</h3>
+        <div id="funnel-chart">
+            <div class="funnel-bar">
+                <div class="label">Search</div>
+                <div class="bar"><div class="fill" id="f-search" style="width:100%;background:var(--primary);"></div></div>
+            </div>
+            <div class="funnel-bar">
+                <div class="label">Results</div>
+                <div class="bar"><div class="fill" id="f-results" style="width:75%;background:var(--secondary);"></div></div>
+            </div>
+            <div class="funnel-bar">
+                <div class="label">Passengers</div>
+                <div class="bar"><div class="fill" id="f-passenger" style="width:50%;background:#8c5a3c;"></div></div>
+            </div>
+            <div class="funnel-bar">
+                <div class="label">Extras</div>
+                <div class="bar"><div class="fill" id="f-ancillaries" style="width:35%;background:#c17a2e;"></div></div>
+            </div>
+            <div class="funnel-bar">
+                <div class="label">Payment</div>
+                <div class="bar"><div class="fill" id="f-payment" style="width:20%;background:var(--success);"></div></div>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 20px; font-size: 14px;">Conversion Pipeline</h4>
+        <div class="pipeline-bar">
+            <div class="pipeline-segment" id="pipe-active" style="width:40%;background:var(--primary);">Active</div>
+            <div class="pipeline-segment" id="pipe-abandoned" style="width:35%;background:var(--danger);">Abandoned</div>
+            <div class="pipeline-segment" id="pipe-recovered" style="width:10%;background:var(--warning);">Recovered</div>
+            <div class="pipeline-segment" id="pipe-converted" style="width:15%;background:var(--success);">Converted</div>
+        </div>
+    </div>
+
+    <!-- AI Insights -->
+    <div class="chart-card">
+        <h3>AI Insights</h3>
+        <ul class="insight-list">
+            <li>
+                <div class="insight-icon" style="background:var(--primary-light);">&#x1F50D;</div>
+                <div>
+                    <strong>Top drop-off point</strong>
+                    <div style="font-size:13px;color:var(--text-light);" id="insight-dropoff">
+                        Passenger details step (form fatigue detected)
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="insight-icon" style="background:#fef3c7;">&#x26A0;</div>
+                <div>
+                    <strong>Abandonment rule</strong>
+                    <div style="font-size:13px;color:var(--text-light);" id="insight-rule">
+                        Exit on passenger or payment marks the session abandoned immediately.
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="insight-icon" style="background:#d1fae5;">&#x2705;</div>
+                <div>
+                    <strong>AI intervention success rate</strong>
+                    <div style="font-size:13px;color:var(--text-light);" id="insight-success">
+                        Proactive chat converts 23% of at-risk sessions
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="insight-icon" style="background:#fce7f3;">&#x1F4A1;</div>
+                <div>
+                    <strong>Recommendation</strong>
+                    <div style="font-size:13px;color:var(--text-light);" id="insight-recommendation">
+                        Capture contact details before payment so more abandoned sessions are eligible for recovery.
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- ─── Recovery Actions ─────────────────────────────────────── -->
+<div class="recovery-actions">
+    <div class="action-card">
+        <div class="abandoned-header">
+            <div>
+                <h3>Abandoned Sessions</h3>
+                <p style="font-size:14px; color:var(--text-light); margin-top:6px;">
+                    Every explicit Exit on passenger or payment is recorded here. Sessions without saved passenger contact stay visible, but they are not eligible for recovery outreach.
+                </p>
+            </div>
+            <div class="summary-pill" id="abandoned-summary">0 abandoned • 0 recoverable</div>
+        </div>
+        <div id="abandoned-sessions-container"></div>
+    </div>
+
+    <div class="action-card">
+        <h3>Recovery Campaign Manager</h3>
+        <p style="font-size:14px; color:var(--text-light); margin-bottom:16px;">
+            Trigger AI-powered recovery campaigns for abandoned sessions that already have saved contact details. Sessions without passenger contact remain visible above but are skipped here.
+        </p>
+        <button class="trigger-btn" id="trigger-recovery" onclick="triggerRecovery()">
+            &#x1F680; Trigger Recovery Campaigns
+        </button>
+        <div class="recovery-log" id="recovery-log" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function updatePipeline(data) {
+    const total = Math.max(data.total_sessions || 0, 1);
+    const recoveredCount = Math.min(data.recovery_sent || 0, data.abandonments || 0);
+    const abandonedPending = Math.max((data.abandonments || 0) - recoveredCount, 0);
+    const segments = [
+        ['pipe-active', data.active_sessions || 0, 'Active'],
+        ['pipe-abandoned', abandonedPending, 'Abandoned'],
+        ['pipe-recovered', recoveredCount, 'Recovery Sent'],
+        ['pipe-converted', data.conversions || 0, 'Converted'],
+    ];
+
+    segments.forEach(([id, count, label]) => {
+        const el = document.getElementById(id);
+        const width = count > 0 ? Math.max((count / total) * 100, 10) : 0;
+        el.style.width = `${width}%`;
+        el.textContent = `${label} ${count}`;
+    });
+}
+
+function renderAbandonedSessions(sessions = [], recoverableCount = 0) {
+    const container = document.getElementById('abandoned-sessions-container');
+    const summary = document.getElementById('abandoned-summary');
+    summary.textContent = `${sessions.length} abandoned • ${recoverableCount} recoverable`;
+
+    if (!sessions.length) {
+        container.innerHTML = '<div class="empty-state">No abandoned sessions recorded yet. Use Exit on passenger or payment to create one for the demo.</div>';
+        return;
+    }
+
+    const rows = sessions.map((session) => {
+        const route = session.route || {};
+        const passenger = session.passenger || {};
+        const flight = session.flight || {};
+
+        let statusClass = 'blocked';
+        let statusText = 'Missing contact details';
+
+        if (session.recovery_sent) {
+            statusClass = 'sent';
+            statusText = 'Recovery sent';
+        } else if (session.recovery_eligible) {
+            statusClass = 'ready';
+            statusText = 'Ready for recovery';
+        }
+
+        return `
+            <tr>
+                <td>
+                    <strong>${escapeHtml(session.current_step || '-')}</strong>
+                    <div class="session-id">${escapeHtml(session.session_id || '')}</div>
+                </td>
+                <td class="session-route">
+                    <strong>${escapeHtml(route.from || '-')} → ${escapeHtml(route.to || '-')}</strong>
+                    <span>${escapeHtml(route.date || 'Date not saved')}</span>
+                </td>
+                <td class="session-passenger">
+                    <strong>${escapeHtml(passenger.name || 'Passenger details not saved')}</strong>
+                    <span>${escapeHtml(passenger.email || passenger.phone || 'No contact saved')}</span>
+                </td>
+                <td>
+                    <strong>${escapeHtml(flight.flight_no || 'Flight not selected')}</strong>
+                    <div class="session-meta">${escapeHtml(flight.airline || '')}</div>
+                </td>
+                <td>
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    container.innerHTML = `
+        <table class="abandoned-table">
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Route</th>
+                    <th>Passenger / Contact</th>
+                    <th>Flight</th>
+                    <th>Recovery</th>
+                </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+        </table>
+    `;
+}
+
+async function loadMetrics() {
+    try {
+        const resp = await fetch('/api/metrics');
+        const data = await resp.json();
+
+        document.getElementById('m-total').textContent = data.total_sessions;
+        document.getElementById('m-abandoned').textContent = data.abandonments;
+        document.getElementById('m-interventions').textContent = data.ai_interventions;
+        document.getElementById('m-conversions').textContent = data.conversions;
+        document.getElementById('m-rate').textContent = data.conversion_rate + '%';
+        document.getElementById('m-recovery').textContent = data.recovery_sent;
+        document.getElementById('hero-rate').textContent = data.conversion_rate + '%';
+        updatePipeline(data);
+        renderAbandonedSessions(data.abandoned_sessions || [], data.recoverable_abandonments || 0);
+
+        // Update funnel based on step abandonments
+        if (data.step_abandonments) {
+            const steps = data.step_abandonments;
+            const entries = Object.entries(steps);
+            const topStep = entries.sort((left, right) => right[1] - left[1])[0];
+            if (topStep) {
+                const [step, count] = topStep;
+                const label = step.charAt(0).toUpperCase() + step.slice(1);
+                document.getElementById('insight-dropoff').textContent =
+                    `${label} step (${count} abandoned sessions)`;
+                document.getElementById('hero-dropoff').textContent = `${label} Step`;
+            } else {
+                document.getElementById('insight-dropoff').textContent = 'No abandoned sessions recorded yet';
+                document.getElementById('hero-dropoff').textContent = 'No Drop-off Yet';
+            }
+        }
+    } catch (e) {
+        console.warn('Failed to load metrics:', e);
+    }
+}
+
+async function triggerRecovery() {
+    const btn = document.getElementById('trigger-recovery');
+    const log = document.getElementById('recovery-log');
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    log.style.display = 'block';
+    log.textContent = 'Scanning abandoned sessions...\n';
+
+    try {
+        const resp = await fetch('/api/recovery/trigger', { method: 'POST' });
+        const data = await resp.json();
+
+        log.textContent += `Found ${data.abandoned_total} abandoned sessions.\n`;
+        log.textContent += `${data.eligible} session(s) had saved contact details and were eligible for recovery.\n`;
+
+        if (data.campaigns) {
+            data.campaigns.forEach(c => {
+                log.textContent += `  [${c.channel.toUpperCase()}] Session ${c.session_id.slice(0, 12)}... — "${c.subject}" — ${c.status}\n`;
+            });
+        }
+
+        if (!data.processed) {
+            log.textContent += 'No recovery messages were sent.\n';
+        }
+
+        log.textContent += `\nDone at ${new Date().toLocaleTimeString()}`;
+        loadMetrics();
+    } catch (e) {
+        log.textContent += 'Error: ' + e.message;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🚀 Trigger Recovery Campaigns';
+    }
+}
+
+// Auto-load metrics
+loadMetrics();
+setInterval(loadMetrics, 15000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1370 @@
+/* ─── AirWave Airlines — Booking UI Styles ─────────────────────── */
+
+:root {
+    --primary: #a5533e;
+    --primary-dark: #6c362a;
+    --primary-light: #f7e4dc;
+    --secondary: #16655c;
+    --secondary-soft: #d8ece7;
+    --accent: #bf6823;
+    --accent-strong: #a95717;
+    --success: #2f7d58;
+    --warning: #c98b22;
+    --danger: #b44d5e;
+    --text: #2f1f1b;
+    --text-light: #75635d;
+    --bg: #f6eee8;
+    --panel: rgba(255, 252, 249, 0.92);
+    --card: rgba(255, 250, 246, 0.86);
+    --border: rgba(108, 54, 42, 0.12);
+    --border-strong: rgba(108, 54, 42, 0.18);
+    --shadow: 0 12px 30px rgba(68, 35, 24, 0.08);
+    --shadow-lg: 0 24px 60px rgba(68, 35, 24, 0.14);
+    --radius: 20px;
+    --font-body: 'Manrope', 'Segoe UI', sans-serif;
+    --font-display: 'Fraunces', Georgia, serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-body);
+    background:
+        radial-gradient(circle at top left, rgba(215, 164, 122, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(22, 101, 92, 0.12), transparent 26%),
+        linear-gradient(180deg, #fbf5ef 0%, var(--bg) 48%, #f2e7dd 100%);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.38;
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::before {
+    top: -140px;
+    left: -120px;
+    background: rgba(214, 135, 92, 0.26);
+}
+
+body::after {
+    right: -140px;
+    bottom: 10%;
+    background: rgba(22, 101, 92, 0.18);
+}
+
+h1, h2, h3, h4 {
+    line-height: 1.15;
+}
+
+h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(22, 101, 92, 0.08);
+    color: var(--secondary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.booking-hero {
+    max-width: 1180px;
+    margin: 26px auto 0;
+    padding: 0 24px;
+    display: block;
+}
+
+.booking-hero-copy,
+.booking-hero-panel {
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-hero-copy {
+    padding: 26px 30px;
+    background:
+        radial-gradient(circle at top right, rgba(255, 202, 162, 0.28), transparent 28%),
+        linear-gradient(135deg, rgba(77, 42, 35, 0.97), rgba(108, 54, 42, 0.95) 55%, rgba(22, 101, 92, 0.9));
+    color: #fff7f2;
+    box-shadow: var(--shadow-lg);
+}
+
+.booking-hero-copy .eyebrow {
+    background: rgba(255, 248, 242, 0.14);
+    color: #ffe8d8;
+}
+
+.booking-hero-copy h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.15rem);
+    line-height: 0.98;
+    max-width: 18ch;
+    margin-bottom: 10px;
+}
+
+.booking-hero-copy p {
+    max-width: 72ch;
+    color: rgba(255, 244, 239, 0.82);
+    font-size: 0.98rem;
+}
+
+.hero-chip-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.hero-chip {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 248, 242, 0.14);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.booking-hero-panel {
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(255, 251, 247, 0.94), rgba(247, 228, 220, 0.84));
+    border: 1px solid rgba(108, 54, 42, 0.12);
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 14px;
+}
+
+.booking-bottom-insights {
+    max-width: 1180px;
+    margin: 0 auto 28px;
+    padding: 0 24px;
+}
+
+.bottom-panel {
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+}
+
+.hero-panel-card {
+    border-radius: 22px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.hero-panel-card strong {
+    display: block;
+    font-size: 1.5rem;
+    font-family: var(--font-display);
+    margin-bottom: 6px;
+}
+
+.hero-panel-card span {
+    color: var(--text-light);
+    font-size: 13px;
+}
+
+.mini-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--secondary);
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.hero-panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.hero-panel-card.metric strong {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.booking-trust-strip {
+    max-width: 1180px;
+    margin: 18px auto 8px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.trust-pill {
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: rgba(255, 250, 246, 0.72);
+    border: 1px solid rgba(108, 54, 42, 0.1);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(68, 35, 24, 0.05);
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+
+.header {
+    background: linear-gradient(135deg, rgba(57, 32, 28, 0.94) 0%, rgba(108, 54, 42, 0.94) 100%);
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 18px 48px rgba(40, 22, 18, 0.18);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(18px);
+}
+
+.header .logo {
+    font-size: 24px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header .logo span { font-size: 28px; }
+
+.header nav a {
+    color: rgba(255, 244, 239, 0.86);
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.header nav a:hover {
+    color: white;
+    background: rgba(255, 248, 242, 0.12);
+}
+
+/* ─── Progress Stepper ───────────────────────────────────────── */
+
+.stepper {
+    display: flex;
+    justify-content: center;
+    padding: 26px 24px 10px;
+    background: transparent;
+    gap: 6px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-light);
+    position: relative;
+    border-radius: 999px;
+    background: rgba(255, 250, 246, 0.6);
+    border: 1px solid rgba(108, 54, 42, 0.08);
+    backdrop-filter: blur(16px);
+}
+
+.step::after {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: rgba(108, 54, 42, 0.18);
+    margin-left: 6px;
+}
+
+.step:last-child::after { display: none; }
+
+.step .num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(108, 54, 42, 0.08);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.step.active {
+    color: var(--primary);
+    background: rgba(255, 248, 242, 0.88);
+    box-shadow: 0 10px 24px rgba(108, 54, 42, 0.08);
+}
+
+.step.active .num { background: var(--primary); color: white; }
+.step.completed .num { background: var(--success); color: white; }
+.step.completed { color: var(--success); }
+
+/* ─── Main Content ───────────────────────────────────────────── */
+
+.main {
+    max-width: 1180px;
+    margin: 12px auto 36px;
+    padding: 0 24px 32px;
+}
+
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(22px);
+}
+
+.card h2 {
+    font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.card-intro p,
+.section-note,
+.footnote {
+    color: var(--text-light);
+}
+
+.booking-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+}
+
+.booking-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.highlight-item {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(247, 228, 220, 0.46);
+    border: 1px solid rgba(108, 54, 42, 0.08);
+}
+
+.highlight-item strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.highlight-item span {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.section-note {
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.subsection-heading {
+    margin: 24px 0 12px;
+    font-size: 1.35rem;
+}
+
+.centered-note {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+.button-grow {
+    flex: 1;
+}
+
+.passenger-draft-review {
+    margin-bottom: 22px;
+    padding: 20px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(216, 236, 231, 0.92), rgba(255, 248, 242, 0.94));
+    border: 1px solid rgba(22, 101, 92, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.passenger-draft-copy h3 {
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+}
+
+.passenger-draft-copy p {
+    color: var(--text-light);
+    margin-bottom: 16px;
+}
+
+.passenger-draft-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.passenger-draft-item {
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(22, 101, 92, 0.12);
+}
+
+.passenger-draft-item strong {
+    display: block;
+    margin: 4px 0;
+    color: var(--text);
+}
+
+.passenger-draft-item small,
+.draft-label {
+    display: block;
+}
+
+.draft-label {
+    color: var(--secondary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.passenger-draft-item small {
+    color: var(--text-light);
+    font-size: 12px;
+}
+
+.passenger-draft-actions {
+    margin-top: 18px;
+}
+
+.search-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+.spotlight-card {
+    background:
+        linear-gradient(180deg, rgba(39, 24, 21, 0.94) 0%, rgba(79, 45, 37, 0.92) 100%),
+        linear-gradient(120deg, rgba(255, 255, 255, 0.1), transparent);
+    color: #fff8f2;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.spotlight-card::after {
+    content: '';
+    position: absolute;
+    inset: auto -60px -80px auto;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(22, 101, 92, 0.52), transparent 70%);
+}
+
+.spotlight-card .eyebrow {
+    background: rgba(255, 248, 242, 0.12);
+    color: #ffe7d8;
+}
+
+.spotlight-card h3 {
+    font-size: clamp(1.5rem, 2.3vw, 2rem);
+    margin-bottom: 18px;
+}
+
+.spotlight-points {
+    display: grid;
+    gap: 14px;
+}
+
+.spotlight-point {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 248, 242, 0.1);
+}
+
+.spotlight-point p {
+    color: rgba(255, 244, 239, 0.78);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.spotlight-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.spotlight-stats div {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 248, 242, 0.12);
+    border-radius: 18px;
+    padding: 14px;
+}
+
+.spotlight-stats span {
+    display: block;
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.spotlight-stats small {
+    color: rgba(255, 244, 239, 0.78);
+    font-size: 12px;
+}
+
+/* ─── Search Form ────────────────────────────────────────────── */
+
+.search-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.form-group input, .form-group select {
+    padding: 14px 16px;
+    border: 1px solid rgba(108, 54, 42, 0.12);
+    border-radius: 14px;
+    font-size: 15px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    outline: none;
+    background: rgba(255, 255, 255, 0.74);
+    color: var(--text);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(165, 83, 62, 0.12);
+    transform: translateY(-1px);
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.search-submit {
+    margin-top: 6px;
+}
+
+.btn {
+    padding: 14px 26px;
+    border: none;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    box-shadow: 0 16px 28px rgba(108, 54, 42, 0.18);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 32px rgba(108, 54, 42, 0.22);
+}
+
+.btn-accent {
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    color: white;
+    box-shadow: 0 16px 28px rgba(169, 87, 23, 0.2);
+}
+
+.btn-accent:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 34px rgba(169, 87, 23, 0.24);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #c45d61, #a73f4e);
+    color: white;
+    box-shadow: 0 16px 28px rgba(167, 63, 78, 0.22);
+}
+
+.btn-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 34px rgba(167, 63, 78, 0.28);
+}
+
+.btn-outline {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(108, 54, 42, 0.14);
+    color: var(--text);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.btn-block { width: 100%; }
+
+/* ─── Flight Results ─────────────────────────────────────────── */
+
+.flight-card {
+    border: 1px solid rgba(108, 54, 42, 0.12);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    background: rgba(255, 255, 255, 0.68);
+    position: relative;
+    overflow: hidden;
+}
+
+.flight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--accent), var(--secondary));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.flight-card:hover {
+    border-color: rgba(165, 83, 62, 0.38);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.flight-card.selected {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(247, 228, 220, 0.9), rgba(255, 251, 247, 0.95));
+}
+
+.flight-card:hover::before,
+.flight-card.selected::before {
+    opacity: 1;
+}
+
+.flight-time {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.flight-city {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.flight-duration {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-light);
+    position: relative;
+    padding: 0 20px;
+}
+
+.flight-duration::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(108, 54, 42, 0.16);
+}
+
+.flight-duration span {
+    position: relative;
+    background: var(--card);
+    padding: 0 8px;
+}
+
+.flight-price {
+    text-align: right;
+}
+
+.flight-price .amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.flight-price .per {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.flight-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.flight-meta .tag {
+    background: rgba(22, 101, 92, 0.08);
+    color: var(--secondary);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+/* ─── Passenger Form ─────────────────────────────────────────── */
+
+.passenger-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+#step-passenger .card,
+#step-payment .card,
+#step-ancillaries .card,
+#step-results .card {
+    box-shadow: var(--shadow-lg);
+}
+
+/* ─── Ancillaries ────────────────────────────────────────────── */
+
+.ancillary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.ancillary-card {
+    border: 1px solid rgba(108, 54, 42, 0.12);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    background: rgba(255, 255, 255, 0.68);
+}
+
+.ancillary-card:hover {
+    border-color: rgba(165, 83, 62, 0.34);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.ancillary-card.selected {
+    border-color: var(--secondary);
+    background: rgba(216, 236, 231, 0.72);
+}
+
+.ancillary-card .icon { font-size: 32px; margin-bottom: 8px; }
+.ancillary-card .name { font-weight: 600; margin-bottom: 4px; }
+.ancillary-card .price { color: var(--primary); font-weight: 800; }
+
+/* ─── Payment ────────────────────────────────────────────────── */
+
+.payment-summary {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(247, 228, 220, 0.46));
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(108, 54, 42, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.summary-row.total {
+    border-top: 1px solid rgba(108, 54, 42, 0.14);
+    margin-top: 8px;
+    padding-top: 12px;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.payment-form {
+    display: grid;
+    gap: 16px;
+}
+
+.secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--success);
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+.price-lock-card {
+    background: linear-gradient(135deg, rgba(252, 241, 214, 0.9), rgba(255, 249, 237, 0.94));
+    border: 1px solid rgba(201, 139, 34, 0.28);
+}
+
+.price-lock-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.price-lock-icon {
+    font-size: 24px;
+}
+
+.price-lock-copy {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 2px;
+}
+
+/* ─── Chat Widget ────────────────────────────────────────────── */
+
+.chat-bubble {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 1000;
+}
+
+.chat-bubble:hover {
+    transform: scale(1.08);
+    box-shadow: 0 26px 48px rgba(68, 35, 24, 0.2);
+}
+
+.chat-bubble .badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.chat-bubble .badge.show { display: flex; }
+
+.chat-widget {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 380px;
+    max-height: 520px;
+    background: rgba(255, 250, 246, 0.94);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(68, 35, 24, 0.18);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+    animation: slideUp 0.3s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+}
+
+.chat-widget.open { display: flex; }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 55%, var(--secondary) 100%);
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-header .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.chat-header .info h4 { font-size: 15px; font-weight: 600; }
+.chat-header .info p { font-size: 12px; opacity: 0.8; }
+
+.chat-header .close-chat {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.chat-header .close-chat:hover { opacity: 1; }
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 340px;
+}
+
+.message {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message.assistant {
+    background: rgba(247, 228, 220, 0.9);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+}
+
+.message.user {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+}
+
+.message.typing {
+    background: rgba(247, 228, 220, 0.9);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+}
+
+.typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+.typing-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.4;
+    animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-8px); opacity: 1; }
+}
+
+.chat-input {
+    display: flex;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid rgba(108, 54, 42, 0.12);
+    border-radius: 24px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.chat-input input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(165, 83, 62, 0.12);
+}
+
+.chat-input button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-input button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 24px rgba(108, 54, 42, 0.18);
+}
+
+/* ─── Proactive Nudge ────────────────────────────────────────── */
+
+.nudge-toast {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    background: rgba(255, 250, 246, 0.96);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    padding: 16px 20px;
+    max-width: 320px;
+    display: none;
+    animation: slideUp 0.4s ease-out;
+    z-index: 999;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.nudge-toast.show { display: block; }
+
+.nudge-toast .nudge-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.nudge-toast .nudge-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.nudge-toast .nudge-name {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.nudge-toast .nudge-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.nudge-toast .nudge-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-light);
+}
+
+/* ─── Booking Confirmation ───────────────────────────────────── */
+
+.confirmation {
+    text-align: center;
+    padding: 44px 24px;
+}
+
+.confirmation .check {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--success), var(--secondary));
+    color: white;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 20px 34px rgba(47, 125, 88, 0.22);
+}
+
+.confirmation h2 { color: var(--success); margin-bottom: 8px; }
+.confirmation .ref { font-size: 18px; color: var(--text-light); margin-bottom: 24px; }
+
+.confirmation-copy {
+    margin-top: 20px;
+}
+
+.confirmation-btn {
+    margin-top: 22px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .booking-hero {
+        margin-top: 16px;
+    }
+
+    .booking-hero-copy,
+    .booking-hero-panel {
+        padding: 22px;
+    }
+
+    .booking-highlights,
+    .hero-panel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        padding: 14px 16px;
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .header nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .header nav a {
+        margin-left: 0;
+    }
+
+    .search-layout { grid-template-columns: 1fr; }
+    .search-form { grid-template-columns: 1fr; }
+    .passenger-form { grid-template-columns: 1fr; }
+    .ancillary-grid { grid-template-columns: 1fr; }
+    .flight-card { grid-template-columns: 1fr; gap: 12px; }
+    .chat-widget { width: calc(100% - 32px); right: 16px; bottom: 80px; }
+    .stepper { flex-wrap: wrap; gap: 8px; }
+    .step::after { display: none; }
+    .button-row { flex-direction: column; }
+    .button-grow { width: 100%; }
+    .metrics-grid, .charts-area { padding: 16px; }
+    .charts-area { grid-template-columns: 1fr; }
+}
+
+/* ─── Dashboard Styles ───────────────────────────────────────── */
+
+.dashboard-header {
+    background:
+        radial-gradient(circle at top right, rgba(201, 139, 34, 0.22), transparent 28%),
+        linear-gradient(135deg, #271815 0%, #4b2a24 54%, #1d5f57 100%);
+    color: white;
+    padding: 30px 24px;
+    box-shadow: 0 18px 48px rgba(40, 22, 18, 0.18);
+}
+
+.dashboard-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+}
+
+.dashboard-header p { opacity: 0.7; font-size: 14px; }
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.metric-card {
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.metric-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-card .value {
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.metric-card .change {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.metric-card .change.up { color: var(--success); }
+.metric-card .change.down { color: var(--danger); }
+
+.charts-area {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-card {
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.66);
+}
+
+.chart-card h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.funnel-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.funnel-bar .label {
+    width: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.funnel-bar .bar {
+    flex: 1;
+    height: 28px;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(108, 54, 42, 0.08);
+}
+
+.funnel-bar .bar .fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 1s ease-out;
+}
+
+.funnel-bar .bar .count {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 600;
+}
